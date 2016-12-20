@@ -34,7 +34,7 @@
         {% if "<br>" not in post.content %}
             <p>{{ post.content }}</p>
         {% else %}
-            <p>{{ post.content | clean(tags=['img', 'b', 'i', 'em', 'strong', 'a'], attributes={'img': ['src', 'alt', 'title', 'width', 'height'], 'a': ['href']})}}</p>
+            <p>{{ post.content | clean(tags=['img', 'b', 'i', 'em', 'strong', 'a', 'br'], attributes={'img': ['src', 'alt', 'title', 'width', 'height'], 'a': ['href']})}}</p>
         {% endif %}
         </section>
 
