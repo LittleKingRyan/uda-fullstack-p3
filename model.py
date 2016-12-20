@@ -1,12 +1,22 @@
 import os
 import jinja2
-
+from bleach import clean
+from markupsafe import Markup
 from google.appengine.ext import db
 
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
                                autoescape = True)
+
+
+""" this do_clean function is found here:
+http://stackoverflow.com/questions/8976683/jinja2-escape-all-html-but-img-b-etc
+"""
+def do_clean(text, **kw):
+    return Markup(clean(text, **kw))
+
+jinja_env.filters['clean'] = do_clean
 
 
 def render_str(template, **params):
