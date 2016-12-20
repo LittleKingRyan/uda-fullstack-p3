@@ -31,7 +31,7 @@
         <hr>
 
         <section class="post-body">
-        {% if "&lt;br&gt;" not in post.content %}
+        {% if "<br>" not in post.content %}
             <p>{{ post.content }}</p>
         {% elif "&lt;/section&gt;" in post.content %}
             <p>{{ post.content }}</p>
