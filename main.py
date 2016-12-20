@@ -89,7 +89,8 @@ class SignUp(BlogHandler):
             user.put()
             # get the user id and then use it to set a cookie
             user_id = user.key().id_or_name()
-            self.response.set_cookie("user_id", cookie_hash(str(user_id)))
+            self.response.set_cookie("user_id",
+                                     cookie_hash(str(user_id), username))
             # redirect user to his or her homepage
             self.redirect("/blog/my")
 
