@@ -43,8 +43,6 @@
             <p>{{ post.content }}</p>
         {% elif "<form>" in post.content %}
             <p>{{ post.content }}</p>
-        {% elif "</form>" in post.content %}
-            <p>{{ post.content }}</p>
         {% else %}
             <p>{{ post.content | safe}}</p>
         {% endif %}
