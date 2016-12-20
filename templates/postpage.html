@@ -40,9 +40,7 @@
 
         <!-- Logged in user can see the edit and delete option  -->
         <div class="meta-info">
-            <p>{{ post.author }}</p>
-            <P>Created at: {{ post.modified_time.strftime("%b %d, %Y - %H %M") }}</p>
-            <p>Last modified: {{ post.modified_time.strftime("%b %d, %Y - %H %M") }}</p>
+            <p>{{ post.author }} | {{ post.modified_time.strftime("%b %d %Y - %H %M") }}</p>
             {% if username == post.author %}
                 <form action="/blog/delete" method="post">
                     <input type="text" hidden name="id" value="{{ post.key().id_or_name() }}">
