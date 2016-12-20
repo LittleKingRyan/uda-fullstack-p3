@@ -1,0 +1,121 @@
+.post {
+    width: 100%;
+    background-color: #f2f2f2;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.blog-title h1, h2 {
+    color: #000;
+    text-align: center;
+}
+
+.blog-title h1 {
+    font-size: 40px;
+}
+
+.post-body {
+    width: 90%;
+}
+
+.post-body p {
+    font-size: 25px;
+}
+
+.post hr {
+    height: 3px;
+    width: 90%;
+}
+
+.votes h3 {
+    text-align: center;
+}
+
+button {
+    background-color: #f2f2f2;
+    border: none;
+    color: none;
+    width: 90%;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    margin: 0px auto;
+    cursor: pointer;
+
+}
+
+.vote {
+    right: 5%;
+}
+
+.meta-info {
+    width: 90%;
+    display: flex;
+}
+
+.meta-info p {
+    color: #4da6ff;
+    font-size: 15px;
+}
+
+.meta-info button {
+    font-size: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 0;
+}
+
+.comments {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 4px;
+    background-color: #fff;
+    width: 90%;
+}
+
+.comments p {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.comment-body {
+    font-size: 15px;
+}
+
+.comment-meta {
+    font-size: 12px;
+}
+
+.comment-header {
+    width: 90%;
+}
+.comments hr {
+    width: 100%;
+}
+
+.error h1 {
+    color: red;
+    text-align: center;
+}
+
+.msg h1{
+    color: #4da6ff;
+    text-align: center;
+}
+
+.left-align p {
+    text-align: left;
+}
+
+.right-align p {
+    text-align: right;
+}
+
+.welcome {
+    text-align: center;
+}
+
+.go {
+    color: red;
+}

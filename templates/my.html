@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    <title>My Page</title>
+{% endblock %}
+
+
+{% block stylesheet %}
+    <link href="../static/css/post.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+{% block content %}
+    <main class="container">
+        <div class="col-12 welcome">
+            <h1>What's up, {{ author }}!</h1>
+        </div>
+
+        <div class="col-12 welcome">
+            <h3>Check out all recent posts? <a href="/blog" class="go">Go</a></h3>
+        </div>
+
+        <div class="welcome">
+            <h3>Or make a new post? <a href="/blog/post" class="go">Go</a></h3>
+        </div>
+        <div class="col-12 welcome">
+            <h4>Hint: refresh page to see delete and update changes.</h4>
+        </div>
+
+        {% for post in my_posts %}
+            <article class="post">
+                <form action="/blog/postpage">
+                    <input type="text" hidden name="id" value="{{ post.key().id_or_name() }}">
+                    <section class="blog-title">
+                        <button><h2>{{ post.title }}</h2></button>
+                    </section>
+                </form>
+                <hr>
+                <section class="votes">
+                    <form action="/blog/edit">
+                        <input type="text" hidden name="id" value="{{ post.key().id_or_name() }}">
+                        <h3>Votes: {{ post.vote_count }}</h3>
+                        <button>Edit Page</button>
+                    </form>
+                </section>
+            </article>
+        {% endfor %}
+    </main>
+{% endblock %}

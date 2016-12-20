@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    <title>Edit Page</title>
+{% endblock %}
+
+
+{% block stylesheet %}
+    <link href="../static/css/form.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+{% block content %}
+    <main class="form-post">
+        <form method="post">
+            <label>
+                Title
+            </label>
+                <input type="text" name="title" value="{{ title }}">
+                <input type="text" hidden name="author" value="{{ author }}">
+                <input type="text" hidden name="post_id" value="{{ post_id }}">
+            <br>
+            <br>
+
+            <label>
+                Content
+            </label>
+            <textarea name="content">{{ content }}</textarea>
+            <label class="error">{{ error }}</label>
+            <button class="button button-block">SUBMIT</button>
+        </form>
+
+        <form action="/blog/postpage">
+            <input type="text" hidden name="id" value="{{ post_id }}">
+            <button class="button button-block">CANCEL</button>
+        </form>
+    </main>
+{% endblock %}

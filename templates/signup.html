@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Portofolio Project - Ryan Di</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/css/index.css" rel="stylesheet" type="text/css">
+    <link href="../static/css/form.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
+</head>
+<body>
+    <header class="container">
+        <figure class="col-6">
+            <a href="/"><img src="../static/image/logo.svg" class="logo-img" alt="Logo"></a>
+        </figure>
+
+        <div class="col-6" id="title">
+            <h1>Ryan Di</h1>
+            <h3>Udacious</h3>
+        </div>
+
+        <div class="col-12 hr">
+            <hr>
+        </div>
+    </header>
+
+    <main class="form">
+        <form method="post">
+            <div class="input">
+                <label>
+                    Username
+                    <span class="required">*</span>
+                </label><br>
+                <span class="error">{{ error_username }}</span>
+                <span class="error">{{ user_exist | safe}}</span>
+                <input type="text"required name="username" value="{{ username }}">
+            </div>
+
+            <div class="input">
+                <label>
+                    Password
+                    <span class="required">*</span>
+                </label><br>
+                <span class="error">{{ error_password }}</span>
+                <input type="password"required name="password">
+            </div>
+
+            <div class="input">
+                <label>
+                    Confirmation
+                    <span class="required">*</span>
+                </label><br>
+                <span class="error">{{ error_verify }}</span>
+                <input type="password"required name="verify">
+            </div>
+
+            <div class="input">
+                <label>
+                    Email
+                </label><br>
+                <span class="error">{{ error_email }}</span>
+                <input type="email" name="email" value= "{{ email }}" >
+            </div>
+
+            <button class="button button-block">Sign Up</button>
+        </form>
+            <a href="/login"><button class="button button-block">Login</button></a>
+    </main>
+</body>
+</html>

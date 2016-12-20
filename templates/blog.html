@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    <title>Post Page</title>
+{% endblock %}
+
+
+{% block stylesheet %}
+    <link href="../static/css/post.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+{% block content %}
+    <section class="container">
+        <div class="col-6 left-align">
+            <p><a href="/blog/my">&larr; My Page </a></p>
+        </div>
+
+        <div class="col-6 right-align">
+            <p><a href="/blog/post">New Post &rarr;</a></p>
+        </div>
+    </section>
+
+    <main class="container">
+    {% for post in posts %}
+        <article class="post">
+            <form action="/blog/postpage">
+                <input type="text" hidden name="id" value="{{ post.key().id_or_name() }}">
+                <section class="blog-title">
+                    <button><h2>{{ post.title }}</h2></button>
+                </section>
+            </form>
+            <hr>
+            <section class="votes">
+                <h3>Votes: {{ post.vote_count }} | Author: {{ post.author }}</h3>
+            </section>
+        </article>
+    {% endfor %}
+    </main>
+{% endblock %}
