@@ -14,10 +14,17 @@
             <a href="/"><img src="../static/image/logo.svg" class="logo-img" alt="Logo"></a>
         </figure>
 
-        <div class="col-6" id="title">
-            <h1>{{ username }}</h1>
-            <h3><a href="/blog/logout">Log out</a></h3>
-        </div>
+        {% if username %}
+            <div class="col-6" id="title">
+                <h1>{{ username }}</h1>
+                <h3><a href="/blog/logout">Log out</a></h3>
+            </div>
+        {% else %}
+            <div class="col-6" id="title">
+                <h1>Ryan Di</h1>
+                <h3><a href="/blog/logout">Udacious</a></h3>
+            </div>
+        {% endif %}
 
         <div class="col-12 hr">
             <hr>
