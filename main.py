@@ -1,7 +1,7 @@
 import webapp2
 from model import *
 from auth import *
-
+from datetime import datetime
 
 class BlogHandler(webapp2.RequestHandler):
     def write(self, *a, **kw):
@@ -150,7 +150,7 @@ class Blog(BlogHandler):
     """ This class selects ten most recent posts created and order them
         in descending order."""
     def get(self):
-        posts = Post.gql("order by created_time desc limit 10")
+        posts = Post.gql("order by modified_time desc limit 10")
         if self.cookie_master():
             # get the current logged in user's username for page display
             # control purpose. e.g. if the current logged in user is the
@@ -167,7 +167,7 @@ class MyPage(BlogHandler):
         if self.cookie_master():
             author = self.get_username_from_cookie()
             my_posts = Post.gql("WHERE author = :author"
-                                " ORDER BY created_time DESC", author=author)
+                                " ORDER BY modified_time DESC", author=author)
             self.render("my.html",
                         my_posts=my_posts,
                         author=author,
@@ -406,6 +406,7 @@ class EditPost(BlogHandler):
                 post = db.get(key)
                 post.title = title
                 post.content = content
+                post.modified_time = datetime.now()
                 post.put()
                 self.redirect('/blog/postpage?id=%s' % str(post.key().id()))
             else:
