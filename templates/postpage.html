@@ -31,17 +31,17 @@
         <hr>
 
         <section class="post-body">
-        {% if "<br>" not in post.content %}
+        {% if "&lt;br&gt;" not in post.content %}
             <p>{{ post.content }}</p>
-        {% elif "</section>" in post.content %}
+        {% elif "&lt;/section&gt;" in post.content %}
             <p>{{ post.content }}</p>
-        {% elif "</article>" in post.content %}
+        {% elif "&lt;/article&gt;" in post.content %}
             <p>{{ post.content}}</p>
-        {% elif "<div>" in post.content %}
+        {% elif "&lt;div>" in post.content %}
             <p>{{ post.content }}</p>
-        {% elif "</div> in post.content %}
+        {% elif "&lt;/div&gt;" in post.content %}
             <p>{{ post.content }}</p>
-        {% elif "<form>" in post.content %}
+        {% elif "&lt;form&gt;" in post.content %}
             <p>{{ post.content }}</p>
         {% else %}
             <p>{{ post.content | safe}}</p>
