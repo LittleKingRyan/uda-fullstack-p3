@@ -429,4 +429,4 @@ app = webapp2.WSGIApplication([
     ('/blog/my', MyPage),
     ('/blog/edit', EditPost),
     ('/blog/delete', DeletePost)
-], debug=False)
+], debug=True)
