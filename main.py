@@ -172,6 +172,8 @@ class MyPage(BlogHandler):
                         my_posts=my_posts,
                         author=author,
                         username=author)
+        else:
+            self.redirect("/signup")
 
 
 class NewPost(BlogHandler):
