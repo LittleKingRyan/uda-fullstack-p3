@@ -19,7 +19,3 @@ libraries:
   version: "2.5.2"
 - name: jinja2
   version: latest
-- name: bleach
-  version: latest
-- name: markupsafe
-  version: latest
