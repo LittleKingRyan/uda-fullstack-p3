@@ -33,16 +33,17 @@
         <section class="post-body">
         {% if "<br>" not in post.content %}
             <p>{{ post.content }}</p>
-        {% elif "&lt;/section&gt;" in post.content %}
+        {% elif "</section>" in post.content %}
             <p>{{ post.content }}</p>
-        {% elif "&lt;/article&gt;" in post.content %}
+        {% elif "</article>" in post.content %}
             <p>{{ post.content}}</p>
-        {% elif "&lt;div>" in post.content %}
+        {% elif "<div>" in post.content %}
             <p>{{ post.content }}</p>
-        {% elif "&lt;/div&gt;" in post.content %}
+        {% elif "</div>" in post.content %}
             <p>{{ post.content }}</p>
-        {% elif "&lt;form&gt;" in post.content %}
+        {% elif "<form>" in post.content %}
             <p>{{ post.content }}</p>
+        {% elif "</form> in post.content %"}
         {% else %}
             <p>{{ post.content | safe}}</p>
         {% endif %}
