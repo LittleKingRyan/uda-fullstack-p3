@@ -160,6 +160,10 @@ h2 {
     font-size: 25px;
 }
 
+.project-link {
+    text-align: center;
+}
+
 /* media queries */
 @media only screen and (min-width: 280px) {
     #title h1 {
