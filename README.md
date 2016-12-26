@@ -28,9 +28,9 @@ https://uda-fullstack-p3-153101.appspot.com/signup
 
 https://uda-fullstack-p3-153101.appspot.com/login
 
-    Login in page
+    Login in page.
 
-    After logging in, user will be redirected to his or her homepage with all his or her posts.
+    After logging in, a user will be redirected to his or her homepage with all of his or her posts.
 
     Also, his or her username will appear on the top right corner with a log out link below.
 
@@ -39,4 +39,14 @@ the post was made by that him or herself. A user may not like his or her own pos
 
 ## About Code:
 Python code is divided into three files, main.py, auth.py and model.py.
-As the names suggest, auth.py has a bunch of functions that handle the
+
+auth.py:
+
+    As the names suggest, auth.py has a bunch of functions that handle the hashing and verifying of cookies and
+    passwords. It also deals with verifying if a user's input is valid or not.
+
+model.py:
+
+    model.py defines the jinja environment and datastore classes.
+
+Additionally, there is a python file called play.py, in which I write and test certain functions.
