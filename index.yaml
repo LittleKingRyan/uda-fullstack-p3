@@ -1,7 +1,0 @@
-indexes:
-
-- kind: Post
-  properties:
-  - name: author
-  - name: modified_time
-    direction: desc
