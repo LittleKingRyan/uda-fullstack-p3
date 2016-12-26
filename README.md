@@ -23,13 +23,20 @@ https://uda-fullstack-p3-153101.appspot.com/blog
 
 
 https://uda-fullstack-p3-153101.appspot.com/signup
+
     Sign up page.
 
 https://uda-fullstack-p3-153101.appspot.com/login
+
     Login in page
 
+    After logging in, user will be redirected to his or her homepage with all his or her posts.
 
+    Also, his or her username will appear on the top right corner with a log out link below.
 
+After logging in, a user can comment its or other users' posts. He or she can also delete and/or a post if
+the post was made by that him or herself. A user may not like his or her own posts. A user can only like each of  other users' posts only once.
 
+## About Code:
 Python code is divided into three files, main.py, auth.py and model.py.
 As the names suggest, auth.py has a bunch of functions that handle the
