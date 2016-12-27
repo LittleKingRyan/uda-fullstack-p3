@@ -132,7 +132,7 @@ class Logout(BlogHandler):
             self.response.delete_cookie('post_id')
             self.redirect('/')
         else:
-            self.redirect('/signup')
+            return self.redirect('/login')
 
 
 class HomePage(BlogHandler):
@@ -173,7 +173,7 @@ class MyPage(BlogHandler):
                         author=author,
                         username=author)
         else:
-            self.redirect("/signup")
+            return self.redirect("/login")
 
 
 class NewPost(BlogHandler):
@@ -210,7 +210,7 @@ class NewPost(BlogHandler):
                             error=error,
                             username=author)
         else:
-            self.redirect('/signup')
+            return self.redirect('/login')
 
 
 class PostPage(BlogHandler):
@@ -318,7 +318,7 @@ class PostPage(BlogHandler):
                                 msg=msg,
                                 username=username)
         else:
-            self.redirect("/signup")
+            return self.redirect("/login")
 
 
 class DeletePost(BlogHandler):
@@ -342,7 +342,7 @@ class DeletePost(BlogHandler):
                 error = "You cannot delete others' posts"
                 self.render("postpage.html", post=post, error=error)
         else:
-            self.redirect("/signup")
+            return self.redirect("/login")
 
 
 class EditPost(BlogHandler):
@@ -379,6 +379,8 @@ class EditPost(BlogHandler):
                             author=post.author,
                             post_id=post_id,
                             username=current_user)
+        else:
+            return self.redirect('/login')
 
     def post(self):
         if self.cookie_master():
@@ -417,7 +419,8 @@ class EditPost(BlogHandler):
                             author=author,
                             error=error,
                             post_id=post_id)
-
+        else:
+            return self.redirect('/login')
 
 app = webapp2.WSGIApplication([
     ('/', HomePage),
