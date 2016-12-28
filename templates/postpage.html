@@ -79,8 +79,25 @@
         {% for comment in post.comments %}
         <div class="comments">
             <hr>
-            <p class="comment-body">{{ comment.content }}</p>
-            <p class="comment-meta">{{ comment.author }} | {{ comment.created_time.strftime("%b %d, %Y - %H % M") }}</p>
+            <p class="comment-body">{{ comment.content | clean(tags=['img', 'b', 'i', 'em', 'strong', 'a', 'br'], attributes={'img': ['src', 'alt', 'title', 'width', 'height'], 'a': ['href']})}}</p>
+            <p class="comment-meta">{{ comment.author }} | {{ comment.modified_time.strftime("%b %d, %Y - %H:%M") }}</p>
+
+            <div class="meta-info-comment">
+            {% if username == comment.author %}
+                <form action="/blog/edit-comment">
+                    <input type="text" hidden name="comment_id" value="{{ comment.key().id_or_name() }}">
+                    <input type="text" hidden name="post_id" value="{{ post.key().id_or_name() }}">
+                    <button>Edit</button>
+                </form>
+
+                <form action="/blog/delete-comment" method="post">
+                    <input type="text" hidden name="comment_id" value="{{ comment.key().id_or_name() }}">
+                    <input type="text" hidden name="post_id" value="{{ post.key().id_or_name() }}">
+                    <button>Delete</button>
+                </form>
+
+            {% endif %}
+            </div>
         </div>
         {% endfor %}
 

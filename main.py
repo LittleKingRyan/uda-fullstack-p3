@@ -45,7 +45,7 @@ class BlogHandler(webapp2.RequestHandler):
 
 class SignUp(BlogHandler):
     def get(self):
-        self.render("signup.html")
+        return self.render("signup.html")
 
     def post(self):
         have_error = False
@@ -80,7 +80,7 @@ class SignUp(BlogHandler):
             have_error = True
 
         if have_error:
-            self.render('signup.html', **params)
+            return self.render('signup.html', **params)
         else:
             # if user's inputs are correct, then hash the password
             # and then create an user entity in the User relation
@@ -92,12 +92,12 @@ class SignUp(BlogHandler):
             self.response.set_cookie("user_id",
                                      cookie_hash(str(user_id), username))
             # redirect user to his or her homepage
-            self.redirect("/blog/my")
+            return self.redirect("/blog/my")
 
 
 class Login(BlogHandler):
     def get(self):
-        self.render("login.html")
+        return self.render("login.html")
 
     def post(self):
         """ Use the user's input username to select the user stored
@@ -113,7 +113,7 @@ class Login(BlogHandler):
                 user_id = user.key().id_or_name()
                 self.response.set_cookie('user_id',
                                          cookie_hash(str(user_id), username))
-                self.redirect("/blog/my")
+                return self.redirect("/blog/my")
             else:
                 error_password = 'Invalid password'
                 self.render("login.html",
@@ -121,7 +121,7 @@ class Login(BlogHandler):
                             error_password=error_password)
         else:
             error_username = 'User does not exist.'
-            self.render("login.html", error_username=error_username)
+            return self.render("login.html", error_username=error_username)
 
 
 class Logout(BlogHandler):
@@ -130,7 +130,8 @@ class Logout(BlogHandler):
             # delete all cookies
             self.response.delete_cookie('user_id')
             self.response.delete_cookie('post_id')
-            self.redirect('/')
+            self.response.delete_cookie('comment_id')
+            return self.redirect('/')
         else:
             return self.redirect('/login')
 
@@ -141,9 +142,9 @@ class HomePage(BlogHandler):
         # right corner together with log out link
         if self.cookie_master():
             username = self.get_username_from_cookie()
-            self.render("index.html", username=username)
+            return self.render("index.html", username=username)
         else:
-            self.render("index.html")
+            return self.render("index.html")
 
 
 class Blog(BlogHandler):
@@ -157,9 +158,9 @@ class Blog(BlogHandler):
             # same as the author of a post, then show the delete and edit
             # buttons
             username = self.get_username_from_cookie()
-            self.render("blog.html", posts=posts, username=username)
+            return self.render("blog.html", posts=posts, username=username)
         else:
-            self.render("blog.html", posts=posts)
+            return self.render("blog.html", posts=posts)
 
 
 class MyPage(BlogHandler):
@@ -181,9 +182,9 @@ class NewPost(BlogHandler):
     def get(self):
         if self.cookie_master():
             username = self.get_username_from_cookie()
-            self.render("post.html", username=username)
+            return self.render("post.html", username=username)
         else:
-            self.redirect("/signup")
+            return self.redirect("/signup")
 
     def post(self):
         if self.cookie_master():
@@ -201,14 +202,14 @@ class NewPost(BlogHandler):
                 post.put()
                 # the id of the post just created will be the permalink to
                 # that post
-                self.redirect('/blog/postpage?id=%s' % str(post.key().id()))
+                return self.redirect('/blog/postpage?id=%s' % str(post.key().id()))
             else:
                 error = 'Both title and content are needed.'
-                self.render("post.html",
-                            title=title,
-                            content=content,
-                            error=error,
-                            username=author)
+                return self.render("post.html",
+                                   title=title,
+                                   content=content,
+                                   error=error,
+                                   username=author)
         else:
             return self.redirect('/login')
 
@@ -235,9 +236,9 @@ class PostPage(BlogHandler):
 
         if self.cookie_master():
             username = self.get_username_from_cookie()
-            self.render("postpage.html", post=post, username=username)
+            return self.render("postpage.html", post=post, username=username)
         else:
-            self.render("postpage.html", post=post)
+            return self.render("postpage.html", post=post)
 
     def post(self):
         """ This post method deals with the liking, commenting functions """
@@ -277,14 +278,14 @@ class PostPage(BlogHandler):
                     Comment(post=post,
                             author=username,
                             content=comment).put()
-                    self.redirect("/blog/postpage?id=%s" % str(post_id))
+                    return self.redirect("/blog/postpage?id=%s" % str(post_id))
 
                 elif not comment:
                     error = "Comment content is needed."
-                    self.render("postpage.html",
-                                post=post,
-                                username=username,
-                                error=error)
+                    return self.render("postpage.html",
+                                       post=post,
+                                       username=username,
+                                       error=error)
 
             elif task_type == "like":
                 # selects all the votes associated with a certain post
@@ -295,17 +296,17 @@ class PostPage(BlogHandler):
 
                 if author == username:
                     error = "You cannot like your own posts, old sport."
-                    self.render("postpage.html",
-                                post=post,
-                                error=error,
-                                username=username)
+                    return self.render("postpage.html",
+                                       post=post,
+                                       error=error,
+                                       username=username)
 
                 elif username in votes:
                     error = "You have voted for this post already."
-                    self.render("postpage.html",
-                                post=post,
-                                error=error,
-                                username=username)
+                    return self.render("postpage.html",
+                                       post=post,
+                                       error=error,
+                                       username=username)
 
                 elif vote == "up":
                     post.vote_count += 1
@@ -313,10 +314,10 @@ class PostPage(BlogHandler):
                     post.put()
 
                     msg = "Thanks for supporting!"
-                    self.render("postpage.html",
-                                post=post,
-                                msg=msg,
-                                username=username)
+                    return self.render("postpage.html",
+                                       post=post,
+                                       msg=msg,
+                                       username=username)
         else:
             return self.redirect("/login")
 
@@ -337,10 +338,10 @@ class DeletePost(BlogHandler):
             post = db.get(key)
             if post.author == current_user:
                 db.delete(key)
-                self.redirect("/blog/my")
+                return self.redirect("/blog/my")
             else:
                 error = "You cannot delete others' posts"
-                self.render("postpage.html", post=post, error=error)
+                return self.render("postpage.html", post=post, error=error)
         else:
             return self.redirect("/login")
 
@@ -363,9 +364,9 @@ class EditPost(BlogHandler):
             key = db.Key.from_path('Post', post_id)
             post = db.get(key)
             if not post:
-                self.write("Not Found")
+                return self.write("Not Found")
             elif post.author != current_user:
-                self.direct("/blog")
+                return self.direct("/blog")
             else:
                 # since content is displayed inside textarea, replace
                 # <br> with \n
@@ -373,12 +374,12 @@ class EditPost(BlogHandler):
                 self.response.set_cookie("post_id",
                                          cookie_hash(str(post_id),
                                                      post.author))
-                self.render("edit.html",
-                            title=post.title,
-                            content=content,
-                            author=post.author,
-                            post_id=post_id,
-                            username=current_user)
+                return self.render("edit.html",
+                                   title=post.title,
+                                   content=content,
+                                   author=post.author,
+                                   post_id=post_id,
+                                   username=current_user)
         else:
             return self.redirect('/login')
 
@@ -398,9 +399,9 @@ class EditPost(BlogHandler):
             id_hash_username = self.request.cookies.get("post_id")
 
             if author != current_user:
-                self.redirect("/blog")
+                return self.redirect("/blog")
             if not cookie_verify(id_hash_username):
-                self.redirect("/blog")
+                return self.redirect("/blog")
             if title and content:
                 content = content.replace("\n", "<br>")
                 post_id = int(id_hash_username.split("|")[0])
@@ -410,17 +411,130 @@ class EditPost(BlogHandler):
                 post.content = content
                 post.modified_time = datetime.now()
                 post.put()
-                self.redirect('/blog/postpage?id=%s' % str(post.key().id()))
+                return self.redirect('/blog/postpage?id=%s' % str(post.key().id()))
             else:
                 error = 'Both title and content are needed.'
-                self.render("edit.html",
-                            title=title,
+                return self.render("edit.html",
+                                   title=title,
+                                   content=content,
+                                   author=author,
+                                   error=error,
+                                   post_id=post_id)
+        else:
+            return self.redirect('/login')
+
+
+class EditComment(BlogHandler):
+    """ This class handles the rendering and changing of a post's comment """
+    def get(self):
+        if self.cookie_master():
+            current_user = self.get_username_from_cookie()
+            # query_string looks like comment_id=123&post_id=456
+            request = self.request.query_string
+            request_list = request.split("&")
+            try:
+                comment_id = request_list[0].split("=")[1]
+            except IndexError:
+                return self.write("Not Found")
+
+            try:
+                comment_id = int(comment_id)
+            except ValueError:
+                return self.write("Not Found")
+
+            key = db.Key.from_path('Comment', comment_id)
+            comment = db.get(key)
+            if not comment:
+                return self.write("Not Found")
+            elif comment.author != current_user:
+                return self.direct("/blog")
+            else:
+                # since content is displayed inside textarea, replace
+                # <br> with \n
+                content = comment.content.replace("<br>", "\n")
+                # get the post_id so that when a user cancels on editing,
+                # he can be redirected to the post page with this post_id
+                post_id = self.request.get("post_id")
+                return self.render("editcomment.html",
+                                   content=content,
+                                   author=comment.author,
+                                   comment_id=comment_id,
+                                   post_id=post_id,
+                                   username=current_user)
+        else:
+            return self.redirect('/login')
+
+    def post(self):
+        if self.cookie_master():
+            current_user = self.get_username_from_cookie()
+            request = self.request.query_string
+            request_list = request.split("&")
+            try:
+                comment_id = request_list[0].split("=")[1]
+            except IndexError:
+                return self.write("Not Found")
+
+            try:
+                comment_id = int(comment_id)
+            except ValueError:
+                return self.write("Not Found")
+
+            content = self.request.get("content")
+            author = self.request.get("author")
+            post_id = self.request.get("post_id")
+
+            # make sure that users can only edit their own posts
+            if author != current_user:
+                return self.redirect("/blog")
+
+            # only update when comment content is given
+            if content:
+                content = content.replace("\n", "<br>")
+                key = db.Key.from_path('Comment', comment_id)
+                comment = db.get(key)
+                comment.content = content
+                comment.modified_time = datetime.now()
+                comment.put()
+                return self.redirect('/blog/postpage?id=%s' % post_id)
+            else:
+                error = 'Comment content is needed.'
+                self.render("editcomment.html",
                             content=content,
                             author=author,
                             error=error,
+                            comment_id=comment_id,
                             post_id=post_id)
         else:
             return self.redirect('/login')
+
+
+class DeleteComment(BlogHandler):
+    """ This class only accpets post method to delete a comment """
+    def post(self):
+        if self.cookie_master():
+            current_user = self.get_username_from_cookie()
+            comment_id = self.request.get("comment_id")
+            post_id = self.request.get("post_id")
+
+            try:
+                comment_id = int(comment_id)
+            except ValueError:
+                return self.redirect("/blog")
+
+            key = db.Key.from_path('Comment', comment_id)
+            comment = db.get(key)
+            if comment:
+                if comment.author == current_user:
+                    db.delete(key)
+                    return self.redirect('/blog/postpage?id=%s' % post_id)
+                else:
+                    error = "You cannot delete others' comment"
+                    self.render("postpage.html", post=post, error=error)
+            else:
+                return self.redirect('/blog/postpage?id=%s' % post_id)
+        else:
+            return self.redirect("/login")
+
 
 app = webapp2.WSGIApplication([
     ('/', HomePage),
@@ -432,5 +546,7 @@ app = webapp2.WSGIApplication([
     ('/blog/postpage', PostPage),
     ('/blog/my', MyPage),
     ('/blog/edit', EditPost),
-    ('/blog/delete', DeletePost)
-], debug=True)
+    ('/blog/edit-comment', EditComment),
+    ('/blog/delete', DeletePost),
+    ('/blog/delete-comment', DeleteComment)
+], debug=False)

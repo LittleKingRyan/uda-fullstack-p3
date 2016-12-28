@@ -46,6 +46,7 @@ class Comment(db.Model):
     post = db.ReferenceProperty(Post, collection_name='comments')
     author = db.StringProperty(required=True)
     created_time = db.DateTimeProperty(auto_now_add=True)
+    modified_time = db.DateTimeProperty(auto_now_add=True)
     content = db.TextProperty(required=True)
 
 

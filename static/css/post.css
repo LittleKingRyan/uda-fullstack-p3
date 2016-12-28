@@ -66,6 +66,18 @@ button {
     padding: 0;
 }
 
+.meta-info-comment {
+    width: 100%;
+    display: flex;
+}
+
+.meta-info-comment button {
+    margin-right: 10px;
+    margin-left: 0px;
+    font-size: 12px;
+    background-color: #fff;
+}
+
 .comments {
     margin-top: 10px;
     margin-bottom: 10px;
